@@ -1,0 +1,57 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title style="color:orange;">Transcription App</title>
+</head>
+<body>
+    <h1>Transcription App</h1>
+    <form action="/transcribe" method="post">
+        <label for="input_folder" style="margin-left:40px; font-size:16px;" >Input Folder:</label>
+        <input type="text" id="input_folder" name="input_folder" value="/content/drive/MyDrive/My Input" style="margin: auto;font-size:16px;
+        border:1px solid #999999;
+        padding:2px;
+        border-radius:3px;
+        box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1) inset; width:300px;"><br><br>
+        <label for="output_folder" style="margin-left: 40px;font-size:16px;">Output Folder:</label>
+        <input type="text" id="output_folder" name="output_folder" value="/content/drive/MyDrive/My Output" style="margin: auto;font-size:16px;
+        border:1px solid #999999;
+        padding:2px;
+        border-radius:3px;
+        box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1) inset; width:300px;"><br><br>
+        <button style="display: block;
+        text-align: center;
+        text-decoration: none;
+        width: 120px;
+        margin-left:40px;
+        font-weight: bold;
+        background: linear-gradient(to top, rgb(5, 130, 174), #27acd9);
+        color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+        transition: 0.5s;" type="submit">Transcribe</button>
+    </form>
+    <h2>Output files:</h2>
+    <ul id="output_files"></ul>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch('/transcribe', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const outputFiles = document.getElementById('output_files');
+                outputFiles.innerHTML = '';
+                data.forEach(file => {
+                    const li = document.createElement('li');
+                    li.textContent = file;
+                    outputFiles.appendChild(li);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
