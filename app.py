@@ -1,10 +1,10 @@
-# app.py
 import os
 import json
 from pydub import AudioSegment
 from faster_whisper import WhisperModel
 import torch
 from tqdm import tqdm
+from IPython.display import display, HTML
 
 def get_audio_duration(file_path):
     try:
@@ -36,7 +36,7 @@ def transcribe_audio(input_folder, output_folder):
                 print(f"{file_name}の文字起こしを開始します")
                 total_duration = get_audio_duration(file_path)
                 # Initialize tqdm progress bar
-                progress_bar = tqdm(total=total_duration, unit="s", position=0, leave=True)
+                progress_bar = tqdm(total=total_duration, unit="s", position=0, leave=True, dynamic_ncols=True)
                 words_data = []
                 last_update_time = 0
 
