@@ -195,10 +195,8 @@ def on_button_click(b):
     for file_path in result_files:
         print(file_path)
 
-def clk():
-    transcribe_button.on_click(on_button_click)
+transcribe_button.on_click(on_button_click)
 
-def dp():
-    display(input_folder_widget)
-    display(output_folder_widget)
-    display(transcribe_button)
+display(input_folder_widget)
+display(output_folder_widget)
+display(transcribe_button)
