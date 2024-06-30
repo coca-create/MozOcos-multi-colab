@@ -1,13 +1,10 @@
 # app.py
-from flask import Flask, render_template, request, jsonify
 import os
 import json
 from pydub import AudioSegment
 from faster_whisper import WhisperModel
 import torch
 from tqdm import tqdm
-
-app = Flask(__name__)
 
 def get_audio_duration(file_path):
     try:
@@ -167,19 +164,11 @@ def transcribe_audio(input_folder, output_folder):
 
     print("全部終わったよ！")
     return main_files
-
+    # Memory cleanup
 torch.cuda.empty_cache()
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/transcribe', methods=['POST'])
-def transcribe():
-    input_folder = request.form['input_folder']
-    output_folder = request.form['output_folder']
-    result_files = transcribe_audio(input_folder, output_folder)
-    return jsonify(result_files)
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    import sys
+    input_folder = sys.argv[1]
+    output_folder = sys.argv[2]
+    transcribe_audio(input_folder, output_folder)
