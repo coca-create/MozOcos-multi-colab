@@ -2,7 +2,6 @@ import os
 import json
 from pydub import AudioSegment
 from faster_whisper import WhisperModel
-import torch
 from tqdm import tqdm
 from IPython.display import display, HTML
 
